@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OCR Review</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <h1>OCR Review</h1>
+    <span class="sub">Claude vs Kraken · <span id="overall">0 / 0</span> marked</span>
+  </div>
+  <div class="tools">
+    <label class="reviewer">Reviewer <input id="reviewer" type="text" placeholder="your name" autocomplete="name"></label>
+    <button id="dl-csv" class="primary">Download CSV</button>
+    <button id="dl-json">Download JSON</button>
+    <label class="btn" for="import">Import JSON</label>
+    <input id="import" type="file" accept=".json,application/json" hidden>
+    <button id="reset" class="danger">Reset</button>
+  </div>
+</header>
+
+<details class="help" id="help" open>
+  <summary>How to mark</summary>
+  <ul>
+    <li>Plain text is where Claude and Kraken agree. Each <span class="demo"><span class="c">Claude</span><span class="k">Kraken</span></span> chip is a place where they disagree. <b>∅</b> means that engine read nothing there.</li>
+    <li>Compare the chip with the scan on the left, then click it and choose <b>Claude</b>, <b>Kraken</b> or <b>Neither</b>. If you choose Neither, you can type the correct reading.</li>
+    <li>Keyboard: <kbd>1</kbd> Claude · <kbd>2</kbd> Kraken · <kbd>3</kbd> Neither · <kbd>0</kbd> clear · <kbd>←</kbd>/<kbd>→</kbd> previous / next chip · <kbd>Enter</kbd> open details.</li>
+    <li>Your marks are saved automatically in this browser. When you finish, click <b>Download CSV</b> and send the file back.</li>
+  </ul>
+</details>
+
+<nav class="tabs" id="tabs"></nav>
+
+<main class="work">
+  <section class="scan">
+    <div class="scan-bar">
+      <span>Scan</span>
+      <label>Zoom <input id="zoom" type="range" min="50" max="300" step="10" value="100"></label>
+      <span id="zoom-val">100%</span>
+    </div>
+    <div class="scan-view" id="scan-view"><img id="scan" alt="Scanned page"></div>
+  </section>
+  <section class="text">
+    <div class="scan-bar">
+      <span>Transcription</span>
+      <span id="page-progress"></span>
+      <button id="next-unmarked" class="small">Next unmarked →</button>
+    </div>
+    <div class="text-view" id="text-view" lang="ru"></div>
+  </section>
+</main>
+
+<div class="pop" id="pop" hidden role="dialog" aria-label="Choose the correct reading">
+  <div class="pop-row">
+    <button data-choice="claude" class="opt c"><kbd>1</kbd> Claude<span class="val"></span></button>
+    <button data-choice="kraken" class="opt k"><kbd>2</kbd> Kraken<span class="val"></span></button>
+    <button data-choice="neither" class="opt n"><kbd>3</kbd> Neither</button>
+  </div>
+  <label class="corr">Correct reading (optional)<input type="text" id="corr" lang="ru"></label>
+  <div class="pop-foot"><button id="clear" class="small">Clear mark</button><button id="close" class="small">Close</button></div>
+</div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
